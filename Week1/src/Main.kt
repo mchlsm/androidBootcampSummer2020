@@ -1,3 +1,5 @@
+import java.util.Scanner
+
 data class Card(
     val pip: String,
     val suit: Char
@@ -12,6 +14,9 @@ fun main() {
     [x] Utilize classes,
     [x] collections and
     [x] functions.
+
+    EXTRA
+    [x] Added functionality that takes in user input to continue playing the game
     */
 
     fun createDeck(): MutableSet<Card> {
@@ -25,10 +30,7 @@ fun main() {
         return deck
     }
 
-    val currentDeck= createDeck()
-
-    fun dealHand(deck: MutableSet<Card> = currentDeck, numOfCards: Int = 2): MutableList<Card> {
-        val hand = mutableListOf<Card>()
+    fun dealHand(deck: MutableSet<Card>, numOfCards: Int = 2, hand: MutableList<Card> = mutableListOf()): MutableList<Card> {
         for (i in 1..numOfCards) {
             val card = deck.random()
             deck.remove(card)
@@ -36,8 +38,6 @@ fun main() {
         }
         return hand
     }
-
-    val myHand = dealHand(currentDeck)
 
     fun evaluateHand(hand: MutableList<Card>): Int {
         var total = 0
@@ -63,7 +63,36 @@ fun main() {
             }
         }
         println("For a total of: $total")
-        if (total == 21) println("You win!")
+        if (total == 21) {
+            println("You win!")
+        } else if (total > 21) {
+            println("You lose!")
+        }
     }
-    printResults(evaluateHand(myHand), myHand)
+
+    // Function calls
+    val input = Scanner(System.`in`)
+    val currentDeck= createDeck()
+    var myHand = dealHand(currentDeck)
+    var myHandTotal = evaluateHand(myHand)
+    printResults(myHandTotal, myHand)
+
+    // Player can decide if they want to keep playing or not
+    while (myHandTotal < 21 && currentDeck.size > 0) {
+        println("Take another card from dealer? (yes/no)")
+        val answer = input.nextLine().toLowerCase()
+        if (answer == "no") {
+            println("Thanks for playing!")
+            break
+        } else if (answer == "yes") {
+            // your current hand plus one more card deal
+            myHand = dealHand(currentDeck, 1, myHand)
+            myHandTotal = evaluateHand(myHand)
+//            println(currentDeck.size) // deck is good, it's getting subtracted by one
+            printResults(myHandTotal, myHand)
+        } else {
+            println("Wrong input. Please type yes/no.")
+            continue
+        }
+    }
 }
