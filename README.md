@@ -2,9 +2,11 @@
 
 ## Profile
 
+![Mike's Profile Image](images/profile_photo_may_2020.jpg)
+
 * **Name**: Michael Sim
-* **Discord Username**: TM: Mike
-* **Location**: California, USA
+* **Discord Username**: TM: Mike (or `sense`)
+* **Location**: Los Angeles, California, USA
 
 I recently discovered Kotlin and I'm working hard to become an Android dev.
 It's very challenging but also exciting. I'm thankful to be part of RW's
